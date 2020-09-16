@@ -36,7 +36,7 @@ namespace DiscordBot
             _services = new ServiceCollection().BuildServiceProvider();
             _client.MessageReceived += CommandRecieved;
             //次の行に書かれているstring token = "hoge"に先程取得したDiscordTokenを指定する。
-            string token = "??????????????????????????????????????????";
+            string token = "";
             await _commands.AddModulesAsync(Assembly.GetEntryAssembly(), _services);
             await _client.LoginAsync(TokenType.Bot, token);
             await _client.StartAsync();
@@ -71,19 +71,31 @@ namespace DiscordBot
 
             //ここから記述--------------------------------------------------------------------------
             var CommandContext = StringConvert(message.Content);
-
+            var CommandContextEnglish = message.Content;
             // コマンド("おはよう")かどうか判定
-            if (CommandContext.Contains("!Team") || CommandContext.Contains("!team"))
+            if (CommandContextEnglish.Contains("!Team") || CommandContextEnglish.Contains("!team"))
             {
                 await DevideTeam(message);
             }
-            else if (CommandContext.Contains("!Help") || CommandContext.Contains("!help"))
+            else if (CommandContextEnglish.Contains("!Help") || CommandContextEnglish.Contains("!help"))
             {
                 await Help(message);
+            }
+            else if (CommandContext.Contains("面白") || CommandContext.Contains("おもしろ") || CommandContext.Contains("おもろ"))
+            {
+                await Omosiro(message);
+            }
+            else if (CommandContextEnglish.Contains("http"))
+            {
+                await Http(message);
             }
             else if (CommandContext.Contains("すま") || CommandContext.Contains("ごめ") || CommandContext.Contains("すみま"))
             {
                 await Gomen(message);
+            }
+            else if (CommandContext.Contains("はる") || CommandContext.Contains("るんこ"))
+            {
+                await Oharu(message);
             }
             else if (CommandContext.Contains("おは") || CommandContext.Contains("こん"))
             {
@@ -109,9 +121,9 @@ namespace DiscordBot
             {
                 await Seyaro(message);
             }
-            else if (CommandContext.Contains("よー\r\n") || CommandContext.Contains("ろー\r\n") || CommandContext.Contains("やろ\r\n") || CommandContext.Contains("しよ\r\n"))
+            else if (CommandContext.Contains("すごい") || CommandContext.Contains("ろー") || CommandContext.Contains("やろう") || CommandContext.Contains("しよう"))
             {
-                await Lets(message);
+                await Oharu(message);
             }
             else if (CommandContext.Contains("うるさ") || CommandContext.Contains("だま") || CommandContext.Contains("黙"))
             {
@@ -125,7 +137,11 @@ namespace DiscordBot
             {
                 await Owaro(message);
             }
-            else if (CommandContext.Contains("ww") || CommandContext.Contains("ｗｗ") || CommandContext.Contains("草") || CommandContext.Contains("わろ"))
+            else if (CommandContext.Contains("すご") || CommandContext.Contains("やめ"))
+            {
+                await Owaro(message);
+            }
+            else if (CommandContext.Contains("ｗｗ") || CommandContext.Contains("草") || CommandContext.Contains("わろ"))
             {
                 await Warota(message);
             }
@@ -308,10 +324,41 @@ namespace DiscordBot
         /// </summary>
         /// <param name="msgParam"></param>
         /// <returns></returns>
-        private async Task Lets(SocketUserMessage message)
+        private async Task Yarou(SocketUserMessage message)
         {
             await message.Channel.SendMessageAsync("まじで！？俺もやる―！");
         }
+
+        /// <summary>
+        /// おはる
+        /// </summary>
+        /// <param name="msgParam"></param>
+        /// <returns></returns>
+        private async Task Oharu(SocketUserMessage message)
+        {
+            await message.Channel.SendMessageAsync("いぇーい、おはるだよー！全員酒豪～！！");
+        }
+
+        /// <summary>
+        /// Http
+        /// </summary>
+        /// <param name="msgParam"></param>
+        /// <returns></returns>
+        private async Task Http(SocketUserMessage message)
+        {
+            await message.Channel.SendMessageAsync("あーこのサイトいいっすねぇ～");
+        }
+
+        /// <summary>
+        /// 面白
+        /// </summary>
+        /// <param name="msgParam"></param>
+        /// <returns></returns>
+        private async Task Omosiro(SocketUserMessage message)
+        {
+            await message.Channel.SendMessageAsync("俺が1週間SMAPだった話する？");
+        }
+
 
         private string StringConvert(string val)
         {
