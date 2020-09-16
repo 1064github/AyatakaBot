@@ -36,7 +36,7 @@ namespace DiscordBot
             _services = new ServiceCollection().BuildServiceProvider();
             _client.MessageReceived += CommandRecieved;
             //次の行に書かれているstring token = "hoge"に先程取得したDiscordTokenを指定する。
-            string token = "??????????????????????????????????????????";
+            string token = "NzU0NTU1Mzk4MzQxNjU2Njk2.X12ceQ.4xPO-Ii8iccOYgA3Ogu7hrmwIGg";
             await _commands.AddModulesAsync(Assembly.GetEntryAssembly(), _services);
             await _client.LoginAsync(TokenType.Bot, token);
             await _client.StartAsync();
@@ -117,17 +117,21 @@ namespace DiscordBot
             {
                 await Damare(message);
             }
-            else if(CommandContext.Contains("か？") || CommandContext.Contains("ん？") || CommandContext.Contains("い？"))
+            else if (CommandContext.Contains("か？") || CommandContext.Contains("ん？") || CommandContext.Contains("い？"))
             {
                 await Question(message);
             }
-            else if(CommandContext.Contains("おわ") || CommandContext.Contains("やめ"))
+            else if (CommandContext.Contains("おわ") || CommandContext.Contains("やめ"))
             {
                 await Owaro(message);
             }
             else if (CommandContext.Contains("ww") || CommandContext.Contains("ｗｗ") || CommandContext.Contains("草") || CommandContext.Contains("わろ"))
             {
                 await Warota(message);
+            }
+            else if (CommandContext.Contains("面白い話して"))
+            {
+                await Omoshiro(message);
             }
 
         }
@@ -139,7 +143,7 @@ namespace DiscordBot
             SocketChannel sd = _client.GetChannel(generalId);
             IReadOnlyCollection<SocketUser> suArray = sd.Users;
             List<string> nameArray = new List<string>();
-            foreach(SocketUser su in suArray)
+            foreach (SocketUser su in suArray)
             {
                 nameArray.Add(su.Username);
             }
@@ -156,7 +160,7 @@ namespace DiscordBot
                 int ranNum = rnd.Next(nameArray.Count);
                 if (i < cnt / 2)
                 {
-                    if(i == 0)
+                    if (i == 0)
                     {
                         res = res + "-------- 1チーム --------\r\n";
                     }
@@ -178,13 +182,13 @@ namespace DiscordBot
 
         private async Task Help(SocketUserMessage message)
         {
-            await message.Channel.SendMessageAsync("うぃーっす！綾鷹Botだゾ～。\r\n" + 
+            await message.Channel.SendMessageAsync("うぃーっす！綾鷹Botだゾ～。\r\n" +
                                                 "「!team」とコメントすることでgeneralにいるメンバーをチーム分けするゾ～。\r\n" +
                                                 "あと適当なコメントにも反応するゾ～。");
         }
 
 
-            private Task Log(LogMessage message)
+        private Task Log(LogMessage message)
         {
             Console.WriteLine(message.ToString());
             return Task.CompletedTask;
@@ -219,7 +223,7 @@ namespace DiscordBot
         {
             await message.Channel.SendMessageAsync(message.Author.Username + "、ナイスゥゥゥゥゥゥゥ～～～～～!");
         }
-        
+
         /// <summary>
         /// 離籍
         /// </summary>
@@ -287,7 +291,7 @@ namespace DiscordBot
         /// <returns></returns>
         private async Task Damare(SocketUserMessage message)
         {
-            await message.Channel.SendMessageAsync("あっごめん"　+ message.Author.Username + "さん、少し黙るわ・・・");
+            await message.Channel.SendMessageAsync("あっごめん" + message.Author.Username + "さん、少し黙るわ・・・");
             Thread.Sleep(60000);
             _waitFlg = false;
             await message.Channel.SendMessageAsync("いぇーい！もう喋ってええやんな？");
@@ -311,6 +315,16 @@ namespace DiscordBot
         private async Task Lets(SocketUserMessage message)
         {
             await message.Channel.SendMessageAsync("まじで！？俺もやる―！");
+        }
+
+        /// <summary>
+        /// おもしろい話して
+        /// </summary>
+        /// <param name="msgParam"></param>
+        /// <returns></returns>
+        private async Task Omoshiro(SocketUserMessage message)
+        {
+            await message.Channel.SendMessageAsync("俺が1週間SMAPだった話する？");
         }
 
         private string StringConvert(string val)
