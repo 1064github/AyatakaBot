@@ -36,7 +36,7 @@ namespace DiscordBot
             _services = new ServiceCollection().BuildServiceProvider();
             _client.MessageReceived += CommandRecieved;
             //次の行に書かれているstring token = "hoge"に先程取得したDiscordTokenを指定する。
-            string token = "";
+            string token = "NzU0NTU1Mzk4MzQxNjU2Njk2.X12ceQ.Y0HU19jzLD755Y4-gJIgcRqsCJQ";
             await _commands.AddModulesAsync(Assembly.GetEntryAssembly(), _services);
             await _client.LoginAsync(TokenType.Bot, token);
             await _client.StartAsync();
@@ -67,88 +67,106 @@ namespace DiscordBot
             if (_waitFlg)
                 return;
 
-            var context = new CommandContext(_client, message);
+            CommandContext context = new CommandContext(_client, message);
 
-            //ここから記述--------------------------------------------------------------------------
-            var CommandContext = StringConvert(message.Content);
-            var CommandContextEnglish = message.Content;
+            // 綾鷹Bot用に文字変換
+            string messageText = StringConvert(message.Content);
             // コマンド("おはよう")かどうか判定
-            if (CommandContextEnglish.Contains("!Team") || CommandContextEnglish.Contains("!team"))
+            if (messageText.Contains("!Team") || messageText.Contains("!team"))
             {
                 await DevideTeam(message);
             }
-            else if (CommandContextEnglish.Contains("!Help") || CommandContextEnglish.Contains("!help"))
+            else if (messageText.Contains("!Help") || messageText.Contains("!help"))
             {
                 await Help(message);
             }
-            else if (CommandContext.Contains("面白") || CommandContext.Contains("おもしろ") || CommandContext.Contains("おもろ"))
+            else if (messageText.Contains("＠"))
+            {
+                await AtMark(message);
+            }
+            else if (messageText.Contains("面白") || messageText.Contains("おもしろ") || messageText.Contains("おもろ")
+                || messageText.Contains("綾鷹") || messageText.Contains("あやたか"))
             {
                 await Omosiro(message);
             }
-            else if (CommandContextEnglish.Contains("http"))
+            else if (messageText.Contains("ｈｔｔｐ"))
             {
                 await Http(message);
             }
-            else if (CommandContext.Contains("すま") || CommandContext.Contains("ごめ") || CommandContext.Contains("すみま"))
+            else if (messageText.Contains("すま") || messageText.Contains("ごめ") || messageText.Contains("すみま"))
             {
                 await Gomen(message);
             }
-            else if (CommandContext.Contains("はる") || CommandContext.Contains("るんこ"))
+            else if (messageText.Contains("はる") || messageText.Contains("るんこ"))
             {
                 await Oharu(message);
             }
-            else if (CommandContext.Contains("おは") || CommandContext.Contains("こん"))
+            else if (messageText.Contains("きゃべ"))
+            {
+                await Cabagge(message);
+            }
+            else if (messageText.Contains("ｗｉｌ") || messageText.Contains("うぃる"))
+            {
+                await Wilkinson(message);
+            }
+            else if (messageText.Contains("ばた") || messageText.Contains("Arik"))
+            {
+                await Bata(message);
+            }
+            else if (messageText.Contains("おは") || messageText.Contains("こん"))
             {
                 await Ohayou(message);
             }
-            else if (CommandContext.Contains("おやす") || CommandContext.Contains("おつ"))
+            else if (messageText.Contains("おやす") || messageText.Contains("おつ"))
             {
                 await Otukare(message);
             }
-            else if (CommandContext.Contains("ないす"))
+            else if (messageText.Contains("ないす"))
             {
                 await Nice(message);
             }
-            else if (CommandContext.Contains("離") || CommandContext.Contains("りせき") || CommandContext.Contains("はなれ"))
+            else if (messageText.Contains("離") || messageText.Contains("りせき") || messageText.Contains("はなれ")
+                || messageText.Contains("ちょっと") || messageText.Contains("ちょま"))
             {
                 await Riseki(message);
             }
-            else if (CommandContext.Contains("勝") || CommandContext.Contains("負"))
+            else if (messageText.Contains("勝") || messageText.Contains("負"))
             {
                 await Win(message);
             }
-            else if (CommandContext.Contains("わかる") || CommandContext.Contains("せやな") || CommandContext.Contains("せやろ"))
+            else if (messageText.Contains("わかる") || messageText.Contains("せやな") || messageText.Contains("せやろ"))
             {
                 await Seyaro(message);
             }
-            else if (CommandContext.Contains("すごい") || CommandContext.Contains("ろー") || CommandContext.Contains("やろう") || CommandContext.Contains("しよう"))
+            else if (messageText.Contains("ろー") || messageText.Contains("やろう") || messageText.Contains("しよ"))
             {
-                await Oharu(message);
+                await Yarou(message);
             }
-            else if (CommandContext.Contains("うるさ") || CommandContext.Contains("だま") || CommandContext.Contains("黙"))
+            else if (messageText.Contains("すご") || messageText.Contains("すげ"))
+            {
+                await Sugoi(message);
+            }
+            else if (messageText.Contains("うるさ") || messageText.Contains("だま") || messageText.Contains("黙"))
             {
                 await Damare(message);
             }
-            else if (CommandContext.Contains("か？") || CommandContext.Contains("ん？") || CommandContext.Contains("い？"))
+            else if (messageText.Contains("か？") || messageText.Contains("ん？") || messageText.Contains("い？"))
             {
                 await Question(message);
             }
-            else if (CommandContext.Contains("おわ") || CommandContext.Contains("やめ"))
+            else if (messageText.Contains("おわ") || messageText.Contains("やめ"))
             {
                 await Owaro(message);
             }
-            else if (CommandContext.Contains("すご") || CommandContext.Contains("やめ"))
+            else if (messageText.Contains("すご") || messageText.Contains("やめ"))
             {
                 await Owaro(message);
             }
-            else if (CommandContext.Contains("ｗｗ") || CommandContext.Contains("草") || CommandContext.Contains("わろ"))
+            else if (messageText.Contains("ｗｗ") || messageText.Contains("草") || messageText.Contains("わろ"))
             {
                 await Warota(message);
             }
-            else if (CommandContext.Contains("面白い話して"))
-            {
-                await Omoshiro(message);
-            }
+
 
         }
 
@@ -301,6 +319,16 @@ namespace DiscordBot
         }
 
         /// <summary>
+        /// すごい
+        /// </summary>
+        /// <param name="msgParam"></param>
+        /// <returns></returns>
+        private async Task Sugoi(SocketUserMessage message)
+        {
+            await message.Channel.SendMessageAsync("え？すごい！？もう一回言って！");
+        }
+
+        /// <summary>
         /// だまれ
         /// </summary>
         /// <param name="msgParam"></param>
@@ -320,7 +348,7 @@ namespace DiscordBot
         /// <returns></returns>
         private async Task Seyaro(SocketUserMessage message)
         {
-            await message.Channel.SendMessageAsync("わかる―");
+            await message.Channel.SendMessageAsync("わかる―！俺もわかるわーぞれ！");
         }
 
         /// <summary>
@@ -340,7 +368,37 @@ namespace DiscordBot
         /// <returns></returns>
         private async Task Oharu(SocketUserMessage message)
         {
-            await message.Channel.SendMessageAsync("いぇーい、おはるだよー！全員酒豪～！！");
+            await message.Channel.SendMessageAsync("おはるさんのマネしまーす！\r\n「ココニ銃アルヨ(中国語)」");
+        }
+
+        /// <summary>
+        /// きゃべつ
+        /// </summary>
+        /// <param name="msgParam"></param>
+        /// <returns></returns>
+        private async Task Cabagge(SocketUserMessage message)
+        {
+            await message.Channel.SendMessageAsync("きゃべつのマネしまーす！\r\n「あ。。。すみません。。。ほんま、すみません。。。」");
+        }
+
+        /// <summary>
+        /// ばた
+        /// </summary>
+        /// <param name="msgParam"></param>
+        /// <returns></returns>
+        private async Task Bata(SocketUserMessage message)
+        {
+            await message.Channel.SendMessageAsync("ばたのマネしまーす！\r\n「ｲｰﾔツンヨーーーーーーーーｿﾚｯ」");
+        }
+
+        /// <summary>
+        /// Wilkinson
+        /// </summary>
+        /// <param name="msgParam"></param>
+        /// <returns></returns>
+        private async Task Wilkinson(SocketUserMessage message)
+        {
+            await message.Channel.SendMessageAsync("Wilkinsonのマネしまーす！\r\n「これ↑ねぇ↓・・・マジめっちゃ強↑いんよ↓・・・！」");
         }
 
         /// <summary>
@@ -350,7 +408,7 @@ namespace DiscordBot
         /// <returns></returns>
         private async Task Http(SocketUserMessage message)
         {
-            await message.Channel.SendMessageAsync("あーこのサイトいいっすねぇ～");
+            await message.Channel.SendMessageAsync("あ～！これ俺もしってる～！！");
         }
 
         /// <summary>
@@ -363,17 +421,46 @@ namespace DiscordBot
             await message.Channel.SendMessageAsync("俺が1週間SMAPだった話する？");
         }
 
+        /// <summary>
+        /// アットマーク
+        /// </summary>
+        /// <param name="msgParam"></param>
+        /// <returns></returns>
+        private async Task AtMark(SocketUserMessage message)
+        {
+            if (!message.Content.Contains("@everyone"))
+            {
+                await message.Channel.SendMessageAsync("@everyone " + message.Author.Username + "さん、他に誰かやらんなら自分やりますよー？");
+            }
+        }
+
+
+
+        /// <summary>
+        /// 文字変換メソッド
+        /// </summary>
+        /// <param name="val"></param>
+        /// <returns></returns>
         private string StringConvert(string val)
         {
+            string res = default;
             try
             {
-                string res = default;
-                res = Strings.StrConv(val.Trim(), VbStrConv.Hiragana | VbStrConv.Wide);
+
+                if (val.Contains("!"))
+                {
+                    res = val;
+                }
+                else
+                {
+                    res = Strings.StrConv(val.Trim(), VbStrConv.Hiragana | VbStrConv.Wide);
+                }
                 return res;
             }
-            catch
+            catch (Exception ex)
             {
-                return "";
+                Console.WriteLine("不明なエラー文字列;{0}", val);
+                return res;
             }
         }
     }

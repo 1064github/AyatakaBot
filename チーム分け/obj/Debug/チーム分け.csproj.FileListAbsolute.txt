@@ -49,3 +49,8 @@ C:\Users\Shintaro\Source\Repos\AyatakaBot\チーム分け\obj\Debug\チーム分
 C:\Users\Shintaro\Source\Repos\AyatakaBot\チーム分け\obj\Debug\チーム分け.csproj.CopyComplete
 C:\Users\Shintaro\Source\Repos\AyatakaBot\チーム分け\obj\Debug\チーム分け.exe
 C:\Users\Shintaro\Source\Repos\AyatakaBot\チーム分け\obj\Debug\チーム分け.pdb
+C:\Users\Shintaro\Source\Repos\miacatroll\AyatakaBot\チーム分け\obj\Debug\チーム分け.csprojAssemblyReference.cache
+C:\Users\Shintaro\Source\Repos\miacatroll\AyatakaBot\チーム分け\obj\Debug\チーム分け.exe.config
+C:\Users\Shintaro\Source\Repos\miacatroll\AyatakaBot\チーム分け\obj\Debug\チーム分け.csproj.CoreCompileInputs.cache
+C:\Users\Shintaro\Source\Repos\miacatroll\AyatakaBot\チーム分け\obj\Debug\チーム分け.exe
+C:\Users\Shintaro\Source\Repos\miacatroll\AyatakaBot\チーム分け\obj\Debug\チーム分け.pdb
